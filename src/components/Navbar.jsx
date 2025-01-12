@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import Logo from "./Logo";
 
 const navStyle = {
-  backgroundColor: "#f3ede5",
+  backgroundColor: "#f79a20",
   padding: "10px 20px",
   display: "flex",
   alignItems: "center",
