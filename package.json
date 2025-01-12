@@ -13,10 +13,13 @@
     "backend": "json-server -p 4000 --watch db.json"
   },
   "dependencies": {
+    "casual-browserify": "^1.5.19-2",
     "json-server": "^1.0.0-beta.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-icons": "^5.4.0",
     "react-router": "^7.1.1",
+    "react-router-dom": "^7.1.1",
     "styled-components": "^6.1.14"
   },
   "devDependencies": {
@@ -24,7 +27,6 @@
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
-    "casual": "^1.6.2",
     "eslint": "^9.17.0",
     "eslint-plugin-react": "^7.37.2",
     "eslint-plugin-react-hooks": "^5.0.0",
