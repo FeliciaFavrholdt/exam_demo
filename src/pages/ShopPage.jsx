@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { sortByPriceAsc, sortByPriceDesc, sortByPopularity, sortByNameAsc } from "../utils/sorting";
 import SortDropdown from "../components/SortDropdown";
 import ProductList from "../components/ProductList";
-import SearchBar from "../components/SearchBar";
 import LayoutToggleButton from "../components/LayoutToggleButton";
+import SearchBar from "../components/SearchBar";
 import { fetchProducts } from "../utils/fetchProducts";
 
 const Container = styled.div`

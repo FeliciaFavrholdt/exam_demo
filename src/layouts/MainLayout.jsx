@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import LoginButton from "../components/LoginButton";
+import NavBar from "../components/NavBar";
 
 const LayoutContainer = styled.div`
   display: flex;
