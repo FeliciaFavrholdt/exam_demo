@@ -5,6 +5,7 @@ import SortDropdown from "../components/SortDropdown";
 import ProductList from "../components/ProductList";
 import SearchBar from "../components/SearchBar";
 import LayoutToggleButton from "../components/LayoutToggleButton";
+import { fetchProducts } from "../utils/fetchProducts";
 
 const Container = styled.div`
   padding: 20px;
@@ -15,6 +16,12 @@ const Title = styled.h2`
   font-size: 2rem;
   margin-bottom: 20px;
   color: #333;
+`;
+
+const ErrorMessage = styled.p`
+  color: red;
+  font-weight: bold;
+  margin-top: 20px;
 `;
 
 const GridWrapper = styled.div`
@@ -36,19 +43,15 @@ const ShopPage = () => {
   const [sortOption, setSortOption] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [layout, setLayout] = useState("grid");
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch("/data/products.json")
-      .then((response) => response.json())
+    fetchProducts()
       .then((data) => {
-        const updatedProducts = data.map((product) => ({
-          ...product,
-          popularity: Math.floor(Math.random() * 5) + 1,
-        }));
-        setProducts(updatedProducts);
-        setFilteredProducts(updatedProducts);
+        setProducts(data);
+        setFilteredProducts(data);
       })
-      .catch((error) => console.error("Error loading products:", error));
+      .catch((error) => setError(error.message));
   }, []);
 
   const handleSortChange = (e) => {
@@ -97,6 +100,7 @@ const ShopPage = () => {
       <LayoutToggleButton layout={layout} toggleLayout={toggleLayout} />
       <SearchBar onSearch={handleSearch} />
       <SortDropdown sortOption={sortOption} handleSortChange={handleSortChange} />
+      {error && <ErrorMessage>{error}</ErrorMessage>}
       {layout === "grid" ? (
         <GridWrapper>
           <ProductList products={filteredProducts} />
