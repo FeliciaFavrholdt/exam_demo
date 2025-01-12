@@ -28,7 +28,6 @@ const MainLayout = () => {
     <LayoutContainer>
       <Header>
         <NavBar />
-        <SearchBar />
         <LoginButton />
       </Header>
       <ContentWrapper>
