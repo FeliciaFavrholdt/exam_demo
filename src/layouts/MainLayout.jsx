@@ -1,7 +1,6 @@
 import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 import NavBar from "../components/NavBar";
-import SearchBar from "../components/SearchBar";
 import LoginButton from "../components/LoginButton";
 
 const LayoutContainer = styled.div`

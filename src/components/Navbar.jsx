@@ -49,7 +49,9 @@ const NavBar = () => {
           <NavLink
             to="/"
             end
-            style={({ isActive }) => (isActive ? { ...linkStyle, ...activeLinkStyle } : linkStyle)}
+            style={({ isActive }) =>
+              isActive ? { ...linkStyle, ...activeLinkStyle } : linkStyle
+            }
           >
             Home
           </NavLink>
@@ -57,7 +59,9 @@ const NavBar = () => {
         <li style={navItemStyle}>
           <NavLink
             to="/shop"
-            style={({ isActive }) => (isActive ? { ...linkStyle, ...activeLinkStyle } : linkStyle)}
+            style={({ isActive }) =>
+              isActive ? { ...linkStyle, ...activeLinkStyle } : linkStyle
+            }
           >
             Shop
           </NavLink>
@@ -65,7 +69,9 @@ const NavBar = () => {
         <li style={navItemStyle}>
           <NavLink
             to="/cart"
-            style={({ isActive }) => (isActive ? { ...linkStyle, ...activeLinkStyle } : linkStyle)}
+            style={({ isActive }) =>
+              isActive ? { ...linkStyle, ...activeLinkStyle } : linkStyle
+            }
           >
             Cart
           </NavLink>
