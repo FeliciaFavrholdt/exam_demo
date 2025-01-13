@@ -1,7 +1,9 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
-import LoginButton from "../components/LoginButton";
 import NavBar from "../components/NavBar";
+import themeIcon from "../assets/images/theme_icon.png";
+import HomePage from "../pages/HomePage";
 
 const LayoutContainer = styled.div`
   display: flex;
@@ -14,23 +16,66 @@ const ContentWrapper = styled.main`
   padding: 20px;
 `;
 
-const Header = styled.header`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  background-color: #f5f5f5;
-`;
+const MainLayout = ({ toggleTheme, theme }) => {
+  const [layout, setLayout] = useState("grid");
+  const [token, setToken] = useState(sessionStorage.getItem("token") || null);
+  const location = useLocation();
 
-const MainLayout = () => {
+  useEffect(() => {
+    if (location.pathname === "/") {
+      const savedLayout = localStorage.getItem("layout") || "grid";
+      setLayout(savedLayout);
+    }
+  }, [location]);
+
+  const toggleLayout = () => {
+    if (location.pathname === "/") {
+      const newLayout = layout === "grid" ? "flex" : "grid";
+      setLayout(newLayout);
+      localStorage.setItem("layout", newLayout);
+    }
+  };
+
+  const handleLogin = async (credentials, navigate) => {
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(credentials),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        sessionStorage.setItem("token", data.token);
+        setToken(data.token);
+        navigate("/shop");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("token");
+    setToken(null);
+  };
+
   return (
     <LayoutContainer>
-      <Header>
-        <NavBar />
-        <LoginButton />
-      </Header>
+      <NavBar 
+        toggleTheme={toggleTheme} 
+        toggleLayout={toggleLayout} 
+        theme={theme} 
+        themeIcon={themeIcon} 
+        handleLogout={handleLogout} 
+      />
       <ContentWrapper>
-        <Outlet />
+        {location.pathname === "/" ? (
+          <HomePage layout={layout} />
+        ) : (
+          <Outlet context={{ layout, toggleLayout }} />
+        )}
       </ContentWrapper>
     </LayoutContainer>
   );

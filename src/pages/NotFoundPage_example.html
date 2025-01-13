@@ -1,0 +1,87 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Page Not Found</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      text-align: center;
+    }
+    .icon {
+      font-size: 5rem;
+      color: #ff6b6b;
+    }
+    .title {
+      font-size: 2.5rem;
+      color: #333;
+    }
+    .description {
+      font-size: 1.2rem;
+      color: #666;
+    }
+    .home-link {
+      padding: 10px 20px;
+      background-color: #5a4b41;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .home-link:hover {
+      background-color: #8c6d5a;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+
+  <!-- VANILLA JAVASCRIPT -->
+  <script>
+    // Create container div
+    const container = document.createElement('div');
+    container.className = 'container';
+
+    // Create icon
+    const icon = document.createElement('div');
+    icon.className = 'icon';
+    icon.innerHTML = '⚠️';  // Fallback icon for FaExclamationTriangle
+
+    // Create title
+    const title = document.createElement('h2');
+    title.className = 'title';
+    title.textContent = '404 - Page Not Found';
+
+    // Create description
+    const description = document.createElement('p');
+    description.className = 'description';
+    description.textContent = 'Sorry, the page you are looking for does not exist.';
+
+    // Create link back to home
+    const homeLink = document.createElement('a');
+    homeLink.className = 'home-link';
+    homeLink.href = '/';
+    homeLink.textContent = 'Go Back Home';
+
+    // Append elements to container
+    container.appendChild(icon);
+    container.appendChild(title);
+    container.appendChild(description);
+    container.appendChild(homeLink);
+
+    // Append container to the root element
+    document.getElementById('root').appendChild(container);
+  </script>
+</body>
+</html>
+

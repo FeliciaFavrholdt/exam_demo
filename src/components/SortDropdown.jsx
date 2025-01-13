@@ -10,7 +10,7 @@ const Select = styled.select`
 const SortDropdown = ({ sortOption, handleSortChange }) => {
   return (
     <Select value={sortOption} onChange={handleSortChange}>
-      <option value="">Sort By</option>
+      <option value="">Filter By</option>
       <option value="priceAsc">Price: Low to High</option>
       <option value="priceDesc">Price: High to Low</option>
       <option value="popularity">Most Popular</option>
