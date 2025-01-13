@@ -1,9 +1,12 @@
+// MainLayout.jsx
 import { Outlet, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import NavBar from "../components/NavBar";
 import themeIcon from "../assets/images/theme_icon.png";
 import HomePage from "../pages/HomePage";
+import useAuth from "../hooks/useAuth";
+import ProtectedRoute from "../routes/ProtectedRoute";
 
 const LayoutContainer = styled.div`
   display: flex;
@@ -18,8 +21,8 @@ const ContentWrapper = styled.main`
 
 const MainLayout = ({ toggleTheme, theme }) => {
   const [layout, setLayout] = useState("grid");
-  const [token, setToken] = useState(sessionStorage.getItem("token") || null);
   const location = useLocation();
+  const { token, userRole, handleLogin, handleRegister, handleLogout, isTokenExpired } = useAuth();
 
   useEffect(() => {
     if (location.pathname === "/") {
@@ -36,30 +39,7 @@ const MainLayout = ({ toggleTheme, theme }) => {
     }
   };
 
-  const handleLogin = async (credentials, navigate) => {
-    try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(credentials),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        sessionStorage.setItem("token", data.token);
-        setToken(data.token);
-        navigate("/shop");
-      } else {
-        alert(data.message);
-      }
-    } catch (error) {
-      console.error("Login failed:", error);
-    }
-  };
-
-  const handleLogout = () => {
-    sessionStorage.removeItem("token");
-    setToken(null);
-  };
+  const publicRoutes = ["/login", "/register"];
 
   return (
     <LayoutContainer>
@@ -73,8 +53,12 @@ const MainLayout = ({ toggleTheme, theme }) => {
       <ContentWrapper>
         {location.pathname === "/" ? (
           <HomePage layout={layout} />
+        ) : publicRoutes.includes(location.pathname) ? (
+          <Outlet context={{ layout, toggleLayout, handleLogin, handleRegister }} />
         ) : (
-          <Outlet context={{ layout, toggleLayout }} />
+          <ProtectedRoute token={token} userRole={userRole} isTokenExpired={isTokenExpired} roles={["user", "admin"]}>
+            <Outlet context={{ layout, toggleLayout, handleLogin, handleRegister }} />
+          </ProtectedRoute>
         )}
       </ContentWrapper>
     </LayoutContainer>

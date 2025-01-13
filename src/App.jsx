@@ -40,9 +40,10 @@ const App = () => {
         throw new Error(data.message || "Invalid username or password.");
       }
     } catch (error) {
-      alert(`Login failed: ${error.message}`);
+      setErrorMessage(`Login failed: ${error.message}`);
     }
   };
+  
 
   const handleRegister = async (credentials, navigate) => {
     try {
@@ -62,6 +63,13 @@ const App = () => {
       alert(`Registration failed: ${error.message}`);
     }
   };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setToken(null);
+    alert("You have been logged out.");
+  };
+  
 
   const PrivateRoute = ({ children }) => {
     const location = useLocation();
